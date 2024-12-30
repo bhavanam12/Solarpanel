@@ -5,14 +5,9 @@ import os
 
 # Ensure scikit-learn is installed
 os.system('pip install scikit-learn==1.4.2')
-
-# Load the trained model
-try:
-    with open('gradient_boosting_model.pkl', 'rb') as file:
-        model = pickle.load(file)
-except FileNotFoundError:
-    st.error("Model file not found. Please ensure 'gradient_boosting_model.pkl' is in the correct directory.")
-    st.stop()
+model_path = 'gradient_boosting_model.pkl'
+with open(model_path, 'rb') as file:
+    model = pickle.load(file)
 
 # Streamlit app
 st.title("Solar Power Prediction App")
