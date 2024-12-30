@@ -1,10 +1,8 @@
 import streamlit as st
 import pickle
 import numpy as np
-import os
 
-# Ensure scikit-learn is installed
-os.system('pip install scikit-learn==1.4.2')
+# Load the trained model
 model_path = 'gradient_boosting_model.pkl'
 with open(model_path, 'rb') as file:
     model = pickle.load(file)
