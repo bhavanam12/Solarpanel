@@ -1,17 +1,7 @@
-import subprocess
-import sys
-
-# Ensure scikit-learn is installed
-try:
-    import sklearn
-except ImportError:
-    print("Installing scikit-learn...")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "scikit-learn"])
-    import sklearn
-
 import streamlit as st
 import pickle
 import numpy as np
+import sklearn
 
 st.write("scikit-learn version:", sklearn.__version__)
 
@@ -33,7 +23,7 @@ def user_input_features():
     feature1 = st.sidebar.number_input("Feature 1:distance-to-solar-noon", value=0.397172237)
     feature2 = st.sidebar.number_input("Feature 2:temperature", value=69)
     feature3 = st.sidebar.number_input("Feature 3:wind-direction", value=28)
-    feature4 = st.sidebar.number_input("Feature 4:wind-speed",value=7.5)
+    feature4 = st.sidebar.number_input("Feature 4:wind-speed", value=7.5)
     feature5 = st.sidebar.number_input("Feature 5:sky-cover", value=0)
     feature6 = st.sidebar.number_input("Feature 6:visibility", value=10)
     feature7 = st.sidebar.number_input("Feature 7:Humidity", value=70)
@@ -61,3 +51,5 @@ if st.button("Predict Power Generated"):
     st.success(f"Predicted Power Generated: {prediction[0]:.2f} kW")
 
 st.write("Adjust the input values in the sidebar to see the predictions.")
+
+    
