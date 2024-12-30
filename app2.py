@@ -1,12 +1,7 @@
-import streamlit as st
-import pickle
-import numpy as np
-import sklearn
 import subprocess
 import sys
 
-st.write("scikit-learn version:", sklearn.__version__)
-
+# Ensure scikit-learn is installed
 try:
     import sklearn
 except ImportError:
@@ -15,13 +10,14 @@ except ImportError:
     import sklearn
 
 import streamlit as st
-st.write("scikit-learn version:", sklearn.__version__)
+import pickle
+import numpy as np
 
+st.write("scikit-learn version:", sklearn.__version__)
 
 # Load the trained model
 with open('gradient_boosting_model.pkl', 'rb') as file:
     model = pickle.load(file)
-
 
 # Streamlit app
 st.title("Solar Power Prediction App")
