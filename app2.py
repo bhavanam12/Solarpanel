@@ -1,6 +1,9 @@
 import streamlit as st
 import pickle
 import numpy as np
+from sklearn.ensemble import GradientBoostingRegressor  # Import necessary model (if needed)
+# or simply
+import sklearn  # Import the full sklearn package if needed
 
 # Load the trained model
 model_path = 'gradient_boosting_model.pkl'
@@ -52,4 +55,3 @@ if st.button("Predict Power Generated"):
         st.error(f"An error occurred during prediction: {e}")
 
 st.write("Adjust the input values in the sidebar to see the predictions.")
-
