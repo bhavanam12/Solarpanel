@@ -1,14 +1,19 @@
 import streamlit as st
-import pickle
+import joblib  # Import joblib for model persistence
 import numpy as np
-from sklearn.ensemble import GradientBoostingRegressor  # Import necessary model (if needed)
-# or simply
-import sklearn  # Import the full sklearn package if needed
+import sklearn
 
-# Load the trained model
-model_path = 'gradient_boosting_model.pkl'
-with open(model_path, 'rb') as file:
-    model = pickle.load(file)
+st.write("scikit-learn version:", sklearn.__version__)
+
+# Load the trained model (assuming it's already saved)
+try:
+    model = joblib.load('gradient_boosting_model.pkl')
+except FileNotFoundError:
+    st.error("Model file not found. Please ensure 'gradient_boosting_model.pkl' is in the same directory as your script.")
+    st.stop() # Stop execution if the file is not found
+except Exception as e: # Catch other potential errors
+    st.error(f"An error occurred while loading the model: {e}")
+    st.stop()
 
 # Streamlit app
 st.title("Solar Power Prediction App")
@@ -21,37 +26,32 @@ This app predicts the **power generated** by solar panels based on input feature
 st.sidebar.header("Input Features")
 
 def user_input_features():
-    feature1 = st.sidebar.number_input("Feature 1: distance-to-solar-noon", value=0.397172237)
-    feature2 = st.sidebar.number_input("Feature 2: temperature", value=69)
-    feature3 = st.sidebar.number_input("Feature 3: wind-direction", value=28)
-    feature4 = st.sidebar.number_input("Feature 4: wind-speed", value=7.5)
-    feature5 = st.sidebar.number_input("Feature 5: sky-cover", value=0)
-    feature6 = st.sidebar.number_input("Feature 6: visibility", value=10)
-    feature7 = st.sidebar.number_input("Feature 7: Humidity", value=70)
-    feature8 = st.sidebar.number_input("Feature 8: average-wind-speed-(period)", value=0)
-    feature9 = st.sidebar.number_input("Feature 9: average-pressure-(period)", value=29.89)
-    data = {
-        'feature1': feature1,
-        'feature2': feature2,
-        'feature3': feature3,
-        'feature4': feature4,
-        'feature5': feature5,
-        'feature6': feature6,
-        'feature7': feature7,
-        'feature8': feature8,
-        'feature9': feature9,
-    }
-    return np.array([list(data.values())])
+  feature1 = st.sidebar.number_input("Feature 1:distance-to-solar-noon", value=0.397172237)
+  feature2 = st.sidebar.number_input("Feature 2:temperature", value=69)
+  feature3 = st.sidebar.number_input("Feature 3:wind-direction", value=28)
+  feature4 = st.sidebar.number_input("Feature 4:wind-speed", value=7.5)
+  feature5 = st.sidebar.number_input("Feature 5:sky-cover", value=0)
+  feature6 = st.sidebar.number_input("Feature 6:visibility", value=10)
+  feature7 = st.sidebar.number_input("Feature 7:Humidity", value=70)
+  feature8 = st.sidebar.number_input("Feature 8:average-wind-speed-(period)", value=0)
+  feature9 = st.sidebar.number_input("Feature 9:average-pressure-(period)", value=29.89)
+  data = {
+      'feature1': feature1,
+      'feature2': feature2,
+      'feature3': feature3,
+      'feature4': feature4,
+      'feature5': feature5,
+      'feature6': feature6,
+      'feature7': feature7,
+      'feature8': feature8,
+      'feature9': feature9,
+  }
+  return np.array([list(data.values())])
 
 # Collect user input
 input_data = user_input_features()
 
 # Prediction
 if st.button("Predict Power Generated"):
-    try:
-        prediction = model.predict(input_data)
-        st.success(f"Predicted Power Generated: {prediction[0]:.2f} kW")
-    except Exception as e:
-        st.error(f"An error occurred during prediction: {e}")
-
-st.write("Adjust the input values in the sidebar to see the predictions.")
+  prediction = model.predict(input_data)
+  st.success(f"Predicted Power Generated: {prediction
